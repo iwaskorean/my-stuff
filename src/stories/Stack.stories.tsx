@@ -37,12 +37,12 @@ export const Horizontal = Template.bind({});
 Horizontal.args = {
   direction: 'row',
   spacing: 2,
-  wrap: false,
+  wrap: 'nowrap',
 };
 
 export const Vertical = Template.bind({});
 Vertical.args = {
   direction: 'column',
   spacing: 2,
-  wrap: false,
+  wrap: 'nowrap',
 };

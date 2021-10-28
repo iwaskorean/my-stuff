@@ -1,5 +1,13 @@
+import { Button, Input } from './components';
+
 function App() {
-  return <h2>Hello World</h2>;
+  return (
+    <>
+      <Button label="Button" backgroundColor="red" />
+      <br />
+      <Input placeholder="Type something here..." />
+    </>
+  );
 }
 
 export default App;
