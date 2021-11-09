@@ -1,17 +1,18 @@
+import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import { ButtonContent } from './styles/Button';
 
-export interface ButtonProps {
+export interface ButtonProps
+  extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
   backgroundColor?: string;
-  label: string;
   size?: 'sm' | 'md' | 'lg';
-  handleClick?: () => void;
+  label?: string;
 }
 
 export default function Button({
-  label,
   backgroundColor,
   size,
-  handleClick,
+  label,
+  ...props
 }: ButtonProps) {
   let scale = 1;
   if (size === 'sm') scale = 0.75;
@@ -24,7 +25,7 @@ export default function Button({
   };
 
   return (
-    <ButtonContent onClick={handleClick} style={style}>
+    <ButtonContent style={style} {...props}>
       {label}
     </ButtonContent>
   );
