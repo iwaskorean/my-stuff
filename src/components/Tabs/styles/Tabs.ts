@@ -17,7 +17,7 @@ export const Nav = styled.nav`
   background-color: #fff;
 `;
 
-export const Tab = styled.div`
+export const TabBox = styled.div`
   width: calc(var(--tab-width) * 1px);
   height: 60px;
   line-height: 60px;

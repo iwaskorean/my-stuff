@@ -1,5 +1,5 @@
 import { PropsWithChildren, HTMLAttributes } from 'react';
-import { Container, Nav, Tab, Content, Glider } from './styles/Tabs';
+import { Container, Nav, TabBox, Content, Glider } from './styles/Tabs';
 
 export interface TabsProps
   extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
@@ -14,32 +14,32 @@ export default function Tabs({ tabsLength, children, ...props }: TabsProps) {
   );
 }
 
-Tabs.Nav = function TabsNav({
+export function TabList({
   children,
   ...props
 }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
   return <Nav {...props}>{children}</Nav>;
-};
+}
 
-Tabs.Tab = function TabsTab({
+export function Tab({
   children,
   ...props
 }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
-  return <Tab {...props}>{children}</Tab>;
-};
+  return <TabBox {...props}>{children}</TabBox>;
+}
 
-Tabs.TabContent = function TabContent({
+export function TabContent({
   children,
   ...props
 }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
   return <Content {...props}>{children}</Content>;
-};
+}
 
-Tabs.Glider = function TabsGlider({
+export function TabGlider({
   currentIndex,
   ...props
 }: {
   currentIndex: number;
 } & PropsWithChildren<HTMLAttributes<HTMLSpanElement>>) {
   return <Glider currentIndex={currentIndex} {...props} />;
-};
+}

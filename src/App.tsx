@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button, TextField, Tabs } from './components';
+import { TabList, Tab, TabGlider, TabContent } from './components/Tabs';
 
 const TABS_DATA = [
   {
@@ -25,20 +26,18 @@ function App() {
       <br />
       <TextField placeholder="placeholder" />
       <Tabs tabsLength={TABS_DATA.length}>
-        <Tabs.Nav>
+        <TabList>
           {TABS_DATA.map(({ title }, i) => {
             return (
-              <Tabs.Tab key={i} onClick={() => setCurrentIndex(i)}>
+              <Tab key={i} onClick={() => setCurrentIndex(i)}>
                 {title}
-              </Tabs.Tab>
+              </Tab>
             );
           })}
-          <Tabs.Glider title="title" currentIndex={currentIndex} />
-        </Tabs.Nav>
+          <TabGlider title="title" currentIndex={currentIndex} />
+        </TabList>
         {TABS_DATA.map(({ content }, i) =>
-          i === currentIndex ? (
-            <Tabs.TabContent>{content}</Tabs.TabContent>
-          ) : null
+          i === currentIndex ? <TabContent>{content}</TabContent> : null
         )}
       </Tabs>
     </>
