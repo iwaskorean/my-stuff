@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import { TabsProps } from '../index';
 
-export const Container = styled.div<TabsProps>`
-  --tab-width: 200;
+export const Container = styled.div<{tabsLength: number}>`
+  --tab-width: 120;
   width: calc(var(--tab-width) * ${({ tabsLength }) => tabsLength} * 1px);
   margin: 20px;
   box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
@@ -17,14 +16,16 @@ export const Nav = styled.nav`
   background-color: #fff;
 `;
 
-export const TabBox = styled.div`
+export const TabBox = styled.button`
   width: calc(var(--tab-width) * 1px);
   height: 60px;
   line-height: 60px;
   text-align: center;
   cursor: pointer;
   transition: color 0.15s ease-in;
-  z-index: 1000;
+  background: #fff;
+  outline: 0;
+  border: none;
 `;
 
 export const Content = styled.div`

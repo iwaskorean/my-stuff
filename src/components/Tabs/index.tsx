@@ -1,15 +1,20 @@
-import { PropsWithChildren, HTMLAttributes } from 'react';
-import { Container, Nav, TabBox, Content, Glider } from './styles/Tabs';
+import { PropsWithChildren, HTMLAttributes, ButtonHTMLAttributes } from 'react';
+import { Container, Nav, TabBox, Glider } from './styles/Tabs';
 
-export interface TabsProps
-  extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
-  tabsLength?: number;
+export interface ITab extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
+  title: string;
+  value: string | number;
+}
+export interface TabsProps extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
+  tabs: ITab[];
 }
 
-export default function Tabs({ tabsLength, children, ...props }: TabsProps) {
+export default function Tabs({ tabs, children, ...props }: TabsProps) {
   return (
-    <Container tabsLength={tabsLength} {...props}>
-      {children}
+    <Container tabsLength={tabs.length} {...props}>
+      <TabList>
+        {children}
+      </TabList>
     </Container>
   );
 }
@@ -21,18 +26,8 @@ export function TabList({
   return <Nav {...props}>{children}</Nav>;
 }
 
-export function Tab({
-  children,
-  ...props
-}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
+export function Tab({ children, ...props }: ITab) {
   return <TabBox {...props}>{children}</TabBox>;
-}
-
-export function TabContent({
-  children,
-  ...props
-}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
-  return <Content {...props}>{children}</Content>;
 }
 
 export function TabGlider({

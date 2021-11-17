@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { Button, TextField, Tabs } from './components';
-import { TabList, Tab, TabGlider, TabContent } from './components/Tabs';
+import { Tab, TabGlider } from './components/Tabs';
 
-const TABS_DATA = [
+const tabs = [
   {
     title: 'Tab 1',
-    content: `Content of Tab 1`,
+    value: '1'
   },
   {
     title: 'Tab 2',
-    content: `Content of Tab 2`,
+    value: '2'
   },
   {
     title: 'Tab 3',
-    content: `Content of Tab 3`,
+    value: '3'
   },
 ];
 
@@ -25,20 +25,19 @@ function App() {
       <Button label="Button" backgroundColor="red" />
       <br />
       <TextField placeholder="placeholder" />
-      <Tabs tabsLength={TABS_DATA.length}>
-        <TabList>
-          {TABS_DATA.map(({ title }, i) => {
-            return (
-              <Tab key={i} onClick={() => setCurrentIndex(i)}>
-                {title}
-              </Tab>
-            );
-          })}
-          <TabGlider title="title" currentIndex={currentIndex} />
-        </TabList>
-        {TABS_DATA.map(({ content }, i) =>
-          i === currentIndex ? <TabContent>{content}</TabContent> : null
+      <br />
+      <Tabs tabs={tabs}>
+        {tabs.map((tab, i) =>
+          <Tab
+            key={tab.title}
+            title={tab.title}
+            value={tab.value}
+            onClick={() => setCurrentIndex(i)}
+          >
+              {tab.title}
+          </Tab>
         )}
+        <TabGlider currentIndex={currentIndex} />
       </Tabs>
     </>
   );
