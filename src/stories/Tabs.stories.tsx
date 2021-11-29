@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Story } from '@storybook/react';
-import { Tabs } from "../components";
-import { Tab, TabGlider } from "../components/Tabs";
+import { Tab } from '../components/Tabs/Tab';
+import { TabGlider } from '../components/Tabs/TabGlider';
+import Tabs from '../components/Tabs/Tabs';
 
 export default {
   title: 'Components/Tabs',
@@ -24,7 +25,12 @@ const Template: Story<ITemplate> = ({ tabsLength, ...args }) => {
     <>
       <Tabs tabs={tabsForStory} {...args}>
         {tabsForStory.map((tab, i) => (
-          <Tab key={tab.title} title={tab.title} value={tab.value} onClick={() => setCurrentIndex(i)}>
+          <Tab
+            key={tab.title}
+            title={tab.title}
+            value={tab.value}
+            onClick={() => setCurrentIndex(i)}
+          >
             {tab.title}
           </Tab>
         ))}
