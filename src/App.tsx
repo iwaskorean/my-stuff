@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, TextField, Tabs } from './components';
+import { Button, TextField, Tabs, Carousel } from './components';
 import Checkbox from './components/Checkbox/Checkbox';
 import { Tab } from './components/Tabs/Tab';
 import { TabGlider } from './components/Tabs/TabGlider';
@@ -28,6 +28,21 @@ const checks = [
   },
   {
     label: 'check3',
+  },
+];
+
+const slides = [
+  {
+    content: 'https://picsum.photos/id/1/1600/900',
+  },
+  {
+    content: 'https://picsum.photos/id/2/1600/900',
+  },
+  {
+    content: 'https://picsum.photos/id/3/1600/900',
+  },
+  {
+    content: 'https://picsum.photos/id/4/1600/900',
   },
 ];
 
@@ -76,6 +91,9 @@ function App() {
         ))}
         {checkList.every((c) => c) && <span>체크 박스 모두 선택 완료</span>}
       </div>
+      <br />
+      {/* Carousel */}
+      <Carousel slides={slides} />
     </>
   );
 }
