@@ -65,8 +65,6 @@ function App() {
 
   return (
     <>
-      <Button label='Button' backgroundColor='red' />
-      <br />
       <TextField placeholder='placeholder' />
       <br />
       {/* Tabs Container */}
@@ -106,11 +104,7 @@ function App() {
       <Modal visible={visible} onSetVisible={handleVisble}>
         I am a Modal.
       </Modal>
-      <Button
-        label='open modal'
-        backgroundColor='blue'
-        onClick={() => handleVisble(true)}
-      />
+      <Button onClick={() => handleVisble(true)}>Open Modal</Button>
     </>
   );
 }
