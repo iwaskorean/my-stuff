@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, TextField, Tabs, Carousel } from './components';
+import { Button, TextField, Tabs, Carousel, Modal } from './components';
 import Checkbox from './components/Checkbox/Checkbox';
 import { Tab } from './components/Tabs/Tab';
 import { TabGlider } from './components/Tabs/TabGlider';
@@ -49,12 +49,19 @@ const slides = [
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [checkList, setCheckList] = useState(() => checks.map(() => false));
+  const [visible, setVisible] = useState(false);
 
   const handleCheckItem = (id: number) => {
     setCheckList((checks) =>
       checks.map((check, i) => (i === id ? !check : check))
     );
   };
+
+  const handleVisble = (active: boolean) => {
+    setVisible(active);
+  };
+
+  console.log(visible);
 
   return (
     <>
@@ -94,6 +101,16 @@ function App() {
       <br />
       {/* Carousel */}
       <Carousel slides={slides} />
+      {/* Modal */}
+      <br />
+      <Modal visible={visible} onSetVisible={handleVisble}>
+        I am a Modal.
+      </Modal>
+      <Button
+        label='open modal'
+        backgroundColor='blue'
+        onClick={() => handleVisble(true)}
+      />
     </>
   );
 }
