@@ -1,4 +1,11 @@
 import ReactDOM from 'react-dom';
 import App from './App';
+import GlobalThemeProvider from './theme/GlobalThemeProvide';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <GlobalThemeProvider>
+    <App />
+  </GlobalThemeProvider>,
+
+  document.getElementById('root')
+);
