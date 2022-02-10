@@ -15,4 +15,4 @@ export default function GlobalThemeProvider({
   );
 }
 
-const theme: Theme = { color, font, fontSize, fontWeight, lineHeight };
+export const theme: Theme = { color, font, fontSize, fontWeight, lineHeight };

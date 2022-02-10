@@ -132,4 +132,7 @@ export interface IColor {
   green700: string;
   green800: string;
   green900: string;
+
+  primary: string;
+  secondary: string;
 }

@@ -4,6 +4,9 @@ const color: IColor = {
   white: '#FFF',
   black: '#000',
 
+  primary: '#4971ff',
+  secondary: '#008189',
+
   gray100: '#f8f8f8',
   gray200: '#efefef',
   gray300: '#e5e5e5',
