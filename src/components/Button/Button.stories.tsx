@@ -1,3 +1,4 @@
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Button, {
   ButtonProps,
@@ -30,14 +31,19 @@ export const All = () => {
   return (
     <Box>
       {Object.values(ButtonVariants).map(
-        (variant: typeof ButtonVariants[keyof typeof ButtonVariants]) => (
-          <>
+        (
+          variant: typeof ButtonVariants[keyof typeof ButtonVariants],
+          i: number
+        ) => (
+          <React.Fragment key={i}>
             <Button variant={variant}>{variant}</Button>
             <Spacing />
-          </>
+          </React.Fragment>
         )
       )}
       <IconButton icon={<BiBeenHere />}>Icon</IconButton>
+      <Spacing />
+      <Button disabled={true}>Disable</Button>
     </Box>
   );
 };
@@ -46,11 +52,11 @@ export const Size = () => {
   return (
     <Box>
       {Object.values(ButtonSizes).map(
-        (size: typeof ButtonSizes[keyof typeof ButtonSizes]) => (
-          <>
+        (size: typeof ButtonSizes[keyof typeof ButtonSizes], i: number) => (
+          <React.Fragment key={i}>
             <Button size={size}>{size}</Button>
             <Spacing />
-          </>
+          </React.Fragment>
         )
       )}
     </Box>
