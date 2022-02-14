@@ -1,31 +1,111 @@
-import { PropsWithChildren, HTMLAttributes, ButtonHTMLAttributes } from 'react';
-import { TabList } from './TabList';
+import React, {
+  PropsWithChildren,
+  HTMLAttributes,
+  useState,
+  ReactNode,
+} from 'react';
+import Tab from './Tab';
+import Panel from './Panel';
 import styled from '@emotion/styled';
+import { TabGlider } from './TabGlider';
 
-export interface ITab
-  extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
+interface TabsProps extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
+  size?: typeof SIZES[keyof typeof SIZES];
+  color?: typeof COLORS[keyof typeof COLORS];
+}
+
+interface TabProps {
   title: string;
-  value: string | number;
-}
-export interface TabsProps
-  extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
-  tabs: ITab[];
+  children: ReactNode;
 }
 
-export default function Tabs({ tabs, children, ...props }: TabsProps) {
+type TabElement = React.ReactElement<TabProps>;
+
+export const SIZES = {
+  SMALL: 'small',
+  MEDIUM: 'medium',
+  LARGE: 'large',
+} as const;
+
+export const COLORS = {
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+  TERTIARY: 'tertiary',
+} as const;
+
+function Tabs({
+  children,
+  size = SIZES.MEDIUM,
+  color = COLORS.PRIMARY,
+  ...props
+}: TabsProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const childrenArr = React.Children.toArray(children);
+
+  const titles = childrenArr.map((child) => {
+    const tab = child as TabElement;
+    return tab.props.title;
+  });
+
+  const panels = childrenArr.map((child) => {
+    const tab = child as TabElement;
+    return tab.props.children;
+  });
+
   return (
-    <Container tabsLength={tabs.length} {...props}>
-      <TabList>{children}</TabList>
-    </Container>
+    <>
+      <Container size={size} {...props}>
+        <Nav>
+          {titles?.map((title: string, i: number) => (
+            <Tab key={i} onClick={() => setCurrentIndex(i)}>
+              {title}
+            </Tab>
+          ))}
+        </Nav>
+        {panels?.map((panel: ReactNode, i: number) => (
+          <Panel key={i} index={i} currentIndex={currentIndex}>
+            {panel}
+          </Panel>
+        ))}
+
+        <TabGlider color={color} currentIndex={currentIndex} />
+      </Container>
+    </>
   );
 }
 
-const Container = styled.div<{ tabsLength: number }>`
-  --tab-width: 120;
-  width: calc(var(--tab-width) * ${({ tabsLength }) => tabsLength} * 1px);
-  margin: 20px;
-  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
-    0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+function Item(props: TabProps) {
+  return <></>;
+}
+
+export default Object.assign(Tabs, {
+  Item,
+});
+
+const Container = styled.div<TabsProps>`
+  --tab-width: 150;
+  ${({ size }) =>
+    (size === SIZES.MEDIUM &&
+      `
+    --tab-width: 100;
+  `) ||
+    (size === SIZES.SMALL &&
+      `
+      --tab-width:50;
+  `) ||
+    (size === SIZES.LARGE &&
+      `
+      --tab-width:150;
+  `)}
+
+  width: 100%;
   border-radius: 5px;
-  overflow: hidden;
+  box-shadow: 0px 1px 2px rgba(0 0 0 / 20%);
+`;
+
+const Nav = styled.nav`
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 1px 2px rgba(0 0 0 / 20%);
 `;

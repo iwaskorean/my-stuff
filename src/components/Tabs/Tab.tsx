@@ -1,11 +1,14 @@
-import { ITab } from './Tabs';
 import styled from '@emotion/styled';
+import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
-export function Tab({ children, ...props }: ITab) {
-  return <TabBox {...props}>{children}</TabBox>;
+interface ItemProps
+  extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {}
+
+export default function Tab({ children, ...props }: ItemProps) {
+  return <TabButton {...props}>{children}</TabButton>;
 }
 
-const TabBox = styled.button`
+const TabButton = styled.button`
   width: calc(var(--tab-width) * 1px);
   height: 60px;
   line-height: 60px;
