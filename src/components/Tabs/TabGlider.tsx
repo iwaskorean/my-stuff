@@ -18,9 +18,9 @@ const Glider = styled.span<{ currentIndex: number }>`
   position: absolute;
   width: calc(var(--tab-width) * 1px);
   background-color: var(--tab-color);
-  top: 53px;
+  top: 57px;
   left: 0;
-  height: 7px;
+  height: 3px;
   transform: translate3d(${({ currentIndex }) => currentIndex * 100}%, 0, 0);
   transition: 0.25s ease-out;
   opacity: 0.8;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Story } from '@storybook/react';
 import Button, {
   ButtonProps,
   SIZES as ButtonSizes,
@@ -11,7 +11,7 @@ import { styled } from '@storybook/theming';
 export default {
   title: 'Components/Button',
   component: Button,
-} as Meta;
+};
 
 const Template: Story<ButtonProps> = (args) => <Button {...args} />;
 

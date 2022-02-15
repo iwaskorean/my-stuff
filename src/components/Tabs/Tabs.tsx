@@ -9,15 +9,16 @@ import Panel from './Panel';
 import TabGlider from './TabGlider';
 import styled from '@emotion/styled';
 
-interface TabsProps extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
+export interface TabsProps
+  extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
   tabSize?: typeof TAB_SIZE[keyof typeof TAB_SIZE];
   color?: typeof COLORS[keyof typeof COLORS];
-  disabled?: boolean;
 }
 
-interface TabProps {
+export interface TabProps {
   title: string;
   children: ReactNode;
+  disabled?: boolean;
 }
 
 type TabElement = React.ReactElement<TabProps>;
@@ -38,22 +39,13 @@ function Tabs({
   children,
   tabSize = TAB_SIZE.MEDIUM,
   color = COLORS.PRIMARY,
-  disabled = false,
   ...props
 }: TabsProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const childrenArr = React.Children.toArray(children);
-
-  const titles = childrenArr.map((child) => {
-    const tab = child as TabElement;
-    return tab.props.title;
-  });
-
-  const panels = childrenArr.map((child) => {
-    const tab = child as TabElement;
-    return tab.props.children;
-  });
+  const childrens = React.Children.toArray(children) as TabElement[];
+  const panels = childrens.map((child) => child.props.children);
+  const titles = childrens.map((child) => child.props.title);
 
   return (
     <>
@@ -65,6 +57,7 @@ function Tabs({
                 key={i}
                 index={i}
                 currentIndex={currentIndex}
+                disabled={childrens[i].props.disabled === true}
                 onClick={() => setCurrentIndex(i)}
               >
                 {title}
@@ -119,7 +112,7 @@ const Container = styled.div<TabsProps>`
 `) ||
     (color === COLORS.TERTIARY &&
       `
-      --tab-color: ${theme.color.gray200};
+      --tab-color: ${theme.color.gray600};
 `)};
 
   width: 100%;
@@ -137,4 +130,5 @@ const Nav = styled.nav`
 const Inner = styled.div<{ length: number }>`
   position: relative;
   width: ${({ length }) => `calc(var(--tab-width) * ${length}px)`};
+  display: flex;
 `;
