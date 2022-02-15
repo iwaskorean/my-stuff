@@ -1,24 +1,28 @@
 import { HTMLAttributes } from 'react';
 import styled from '@emotion/styled';
-import { COLORS } from './Tabs';
 
 interface TabGliderProps extends HTMLAttributes<HTMLSpanElement> {
   currentIndex: number;
   width?: string;
 }
 
-export function TabGlider({ currentIndex, width, ...props }: TabGliderProps) {
-  return <Glider width={width} currentIndex={currentIndex} {...props} />;
+export default function TabGlider({
+  currentIndex,
+  width,
+  ...props
+}: TabGliderProps) {
+  return <Glider currentIndex={currentIndex} {...props} />;
 }
 
-const Glider = styled.span<TabGliderProps>`
+const Glider = styled.span<{ currentIndex: number }>`
   position: absolute;
   width: calc(var(--tab-width) * 1px);
-  top: 50px;
+  background-color: var(--tab-color);
+  top: 53px;
   left: 0;
-  height: 10px;
-  background-color: ${({ color, theme }) =>
-    color === COLORS.PRIMARY && theme.color.primary};
-  transform: translateX(${({ currentIndex }) => currentIndex * 100}%);
+  height: 7px;
+  transform: translate3d(${({ currentIndex }) => currentIndex * 100}%, 0, 0);
   transition: 0.25s ease-out;
+  opacity: 0.8;
+  border-radius: 3px;
 `;

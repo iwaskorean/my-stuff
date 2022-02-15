@@ -6,12 +6,13 @@ import React, {
 } from 'react';
 import Tab from './Tab';
 import Panel from './Panel';
+import TabGlider from './TabGlider';
 import styled from '@emotion/styled';
-import { TabGlider } from './TabGlider';
 
 interface TabsProps extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
-  size?: typeof SIZES[keyof typeof SIZES];
+  tabSize?: typeof TAB_SIZE[keyof typeof TAB_SIZE];
   color?: typeof COLORS[keyof typeof COLORS];
+  disabled?: boolean;
 }
 
 interface TabProps {
@@ -21,7 +22,7 @@ interface TabProps {
 
 type TabElement = React.ReactElement<TabProps>;
 
-export const SIZES = {
+export const TAB_SIZE = {
   SMALL: 'small',
   MEDIUM: 'medium',
   LARGE: 'large',
@@ -35,8 +36,9 @@ export const COLORS = {
 
 function Tabs({
   children,
-  size = SIZES.MEDIUM,
+  tabSize = TAB_SIZE.MEDIUM,
   color = COLORS.PRIMARY,
+  disabled = false,
   ...props
 }: TabsProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,27 +57,35 @@ function Tabs({
 
   return (
     <>
-      <Container size={size} {...props}>
+      <Container tabSize={tabSize} color={color} {...props}>
         <Nav>
-          {titles?.map((title: string, i: number) => (
-            <Tab key={i} onClick={() => setCurrentIndex(i)}>
-              {title}
-            </Tab>
-          ))}
+          <Inner length={titles.length}>
+            {titles?.map((title: string, i: number) => (
+              <Tab
+                key={i}
+                index={i}
+                currentIndex={currentIndex}
+                onClick={() => setCurrentIndex(i)}
+              >
+                {title}
+              </Tab>
+            ))}
+            {titles.length > 0 && (
+              <TabGlider color={color} currentIndex={currentIndex} />
+            )}
+          </Inner>
         </Nav>
         {panels?.map((panel: ReactNode, i: number) => (
           <Panel key={i} index={i} currentIndex={currentIndex}>
             {panel}
           </Panel>
         ))}
-
-        <TabGlider color={color} currentIndex={currentIndex} />
       </Container>
     </>
   );
 }
 
-function Item(props: TabProps) {
+export function Item(props: TabProps) {
   return <></>;
 }
 
@@ -84,20 +94,33 @@ export default Object.assign(Tabs, {
 });
 
 const Container = styled.div<TabsProps>`
-  --tab-width: 150;
-  ${({ size }) =>
-    (size === SIZES.MEDIUM &&
+  ${({ tabSize }) =>
+    (tabSize === TAB_SIZE.MEDIUM &&
       `
     --tab-width: 100;
   `) ||
-    (size === SIZES.SMALL &&
+    (tabSize === TAB_SIZE.SMALL &&
       `
-      --tab-width:50;
+      --tab-width: 50;
   `) ||
-    (size === SIZES.LARGE &&
+    (tabSize === TAB_SIZE.LARGE &&
       `
-      --tab-width:150;
-  `)}
+      --tab-width: 150;
+  `)};
+
+  ${({ color, theme }) =>
+    (color === COLORS.PRIMARY &&
+      `
+      --tab-color: ${theme.color.primary};
+`) ||
+    (color === COLORS.SECONDARY &&
+      `
+      --tab-color: ${theme.color.secondary};
+`) ||
+    (color === COLORS.TERTIARY &&
+      `
+      --tab-color: ${theme.color.gray200};
+`)};
 
   width: 100%;
   border-radius: 5px;
@@ -105,7 +128,13 @@ const Container = styled.div<TabsProps>`
 `;
 
 const Nav = styled.nav`
+  overflow-x: scroll;
   width: 100%;
-  background-color: #fff;
-  box-shadow: 0px 1px 2px rgba(0 0 0 / 20%);
+  background-color: ${({ theme }) => theme.color.white};
+  border-bottom: 2px solid ${({ theme }) => theme.color.gray200};
+`;
+
+const Inner = styled.div<{ length: number }>`
+  position: relative;
+  width: ${({ length }) => `calc(var(--tab-width) * ${length}px)`};
 `;
