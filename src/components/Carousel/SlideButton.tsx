@@ -19,13 +19,12 @@ export default function SlideButton({
 const Button = styled.button<{ prev: boolean; next: boolean }>`
   position: absolute;
   top: 50%;
-  width: 40px;
-  height: 40px;
-  background-color: ivory;
+  width: 35px;
+  height: 35px;
   transform: translateY(-50%);
-  cursor: pointer;
-  z-index: 3;
   border: none;
+  border-radius: 50%;
+  cursor: pointer;
 
   &:after {
     content: '';
@@ -33,24 +32,27 @@ const Button = styled.button<{ prev: boolean; next: boolean }>`
     width: 10px;
     height: 10px;
     top: 50%;
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
-    transform: translate(-50%, -50%) rotate(135deg);
+    border-right: 3px solid var(--color);
+    border-bottom: 3px solid var(--color);
+    transform: translate3d(-50%, -50%, 0) rotate(135deg);
   }
 
   ${({ prev }) =>
     prev &&
     `
-    left:0;
+    left:10px;
+    &:after {
+      left: calc(50% + 2.5px);
+    }
   `}
 
   ${({ next }) =>
     next &&
     `
-    right:0;
+    right:10px;
 
     &:after {
-      left: 47%;
+      left: calc(50% - 2.5px);
       transform: translate(-50%, -50%) rotate(-45deg);
     }
   `}
