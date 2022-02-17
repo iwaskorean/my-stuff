@@ -47,7 +47,7 @@ export const TabListScrolling = () => {
       <Tabs>
         {Array.from({ length: 10 }).map((_, i) => (
           <Tabs.Item key={i} title={'Tab ' + (i + 1)}>
-            Content {i + 1}
+            <h2>Content {i + 1}</h2>
           </Tabs.Item>
         ))}
       </Tabs>

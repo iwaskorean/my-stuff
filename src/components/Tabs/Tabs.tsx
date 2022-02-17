@@ -3,6 +3,7 @@ import React, {
   HTMLAttributes,
   useState,
   ReactNode,
+  ReactElement,
 } from 'react';
 import Tab from './Tab';
 import Panel from './Panel';
@@ -17,11 +18,11 @@ export interface TabsProps
 
 export interface TabProps {
   title: string;
-  children: ReactNode;
+  children: ReactElement | ReactElement[] | string;
   disabled?: boolean;
 }
 
-type TabElement = React.ReactElement<TabProps>;
+type TabElement = ReactElement<TabProps>;
 
 export const TAB_SIZE = {
   SMALL: 'small',
@@ -44,8 +45,9 @@ function Tabs({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const childrens = React.Children.toArray(children) as TabElement[];
-  const panels = childrens.map((child) => child.props.children);
-  const titles = childrens.map((child) => child.props.title);
+  const items = childrens.filter((children) => children.type === Item);
+  const panels = items.map((child) => child.props.children);
+  const titles = items.map((child) => child.props.title);
 
   return (
     <>
@@ -78,8 +80,8 @@ function Tabs({
   );
 }
 
-export function Item(props: TabProps) {
-  return <></>;
+export function Item({ children }: TabProps) {
+  return <>{children}</>;
 }
 
 export default Object.assign(Tabs, {
