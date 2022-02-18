@@ -12,6 +12,8 @@ import styled from '@emotion/styled';
 
 export interface CrouselProps extends HTMLAttributes<HTMLDivElement> {
   color?: typeof COLORS[keyof typeof COLORS];
+  indicators?: boolean;
+  buttons?: boolean;
 }
 
 export const COLORS = {
@@ -26,7 +28,13 @@ export interface SlideProps {
 
 type SlideElement = ReactElement<SlideProps>;
 
-function Carousel({ color = 'primary', children, ...props }: CrouselProps) {
+function Carousel({
+  color = 'primary',
+  indicators = true,
+  buttons = true,
+  children,
+  ...props
+}: CrouselProps) {
   const [current, setCurrent] = useState(0);
   const isMoving = useRef(false);
 
@@ -79,13 +87,15 @@ function Carousel({ color = 'primary', children, ...props }: CrouselProps) {
         })}
       </Inner>
 
-      {slides.length > 1 && (
+      {slides.length > 1 && indicators && (
+        <Indicators
+          length={slides.length}
+          current={current}
+          handleCurrent={setCurrent}
+        />
+      )}
+      {slides.length > 1 && buttons && (
         <>
-          <Indicators
-            length={slides.length}
-            current={current}
-            handleCurrent={setCurrent}
-          />
           <SlideButton prev handleSlide={handlePrev} />
           <SlideButton next handleSlide={handleNext} />
         </>
