@@ -1,21 +1,29 @@
 import styled from '@emotion/styled';
+import { HTMLAttributes } from 'react';
 
-interface OverlayProps {
-  visible: boolean;
-  onSetVisible(active: boolean): void;
+interface OverlayProps extends HTMLAttributes<HTMLDivElement> {
+  show: boolean;
+  onSetVisible(): void;
+  opaque: boolean;
 }
 
-export default function Overlay({ visible, onSetVisible }: OverlayProps) {
-  return <Wrapper visible={visible} onClick={() => onSetVisible(false)} />;
+export default function Overlay({
+  show,
+  opaque,
+  onSetVisible,
+  ...props
+}: OverlayProps) {
+  return (
+    <Wrapper opaque={opaque} show={show} onClick={onSetVisible} {...props} />
+  );
 }
 
-const Wrapper = styled.div<{ visible: boolean }>`
-  display: ${({ visible }) => (visible ? 'block' : 'none')};
+const Wrapper = styled.div<{ show: boolean; opaque: boolean }>`
+  display: ${({ show }) => (show ? 'block' : 'none')};
   position: absolute;
-  z-index: 9;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: rgba(0, 0, 0, ${({ opaque }) => (opaque ? 1 : 0.3)});
 `;

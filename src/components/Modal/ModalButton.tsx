@@ -1,23 +1,36 @@
-import styled from '@emotion/styled';
+import { MdClose } from 'react-icons/md';
+import styled from '@emotion/styled/macro';
+import { ButtonHTMLAttributes } from 'react';
 
-interface ModalButtonProps {
-  children: string;
-  onSetVisible(active: boolean): void;
+interface ModalButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  onSetVisible(): void;
 }
 
 export default function ModalButton({
-  children,
   onSetVisible,
+  ...props
 }: ModalButtonProps) {
-  return <Button onClick={() => onSetVisible(false)}>{children}</Button>;
+  return (
+    <Button onClick={() => onSetVisible()} {...props}>
+      <CloseIcon />
+    </Button>
+  );
 }
 
 const Button = styled.button`
   position: absolute;
-  font-size: 1rem;
   right: 0px;
   top: 0px;
   cursor: pointer;
   display: block;
-  z-index: 10;
+  outline: none;
+  background: none;
+  border: none;
+`;
+
+const CloseIcon = styled(MdClose)`
+  margin: calc(var(--padding) - 10px);
+  font-size: ${({ theme }) => theme.fontSize.size30}px;
+  background: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.primary};
 `;
