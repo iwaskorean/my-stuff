@@ -1,5 +1,10 @@
 import { createPortal } from 'react-dom';
-import { HtmlHTMLAttributes, PropsWithChildren, ReactElement } from 'react';
+import {
+  HtmlHTMLAttributes,
+  PropsWithChildren,
+  ReactElement,
+  useEffect,
+} from 'react';
 import Overlay from './Overlay';
 import ModalButton from './ModalButton';
 import styled from '@emotion/styled/macro';
@@ -23,6 +28,21 @@ function Modal({
   children,
   ...props
 }: ModalProps) {
+  useEffect(() => {
+    document.body.style.cssText = `
+      position: fixed;
+      top: -${window.scrollY}px;
+      overflow-y: hidden;
+      width: 100%;
+    `;
+
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+    };
+  });
+
   const childrens = React.Children.toArray(children) as ModalChildrenElement[];
   const header = childrens
     .filter(({ type }) => type === Header)
@@ -34,7 +54,7 @@ function Modal({
   return createPortal(
     <Wrapper {...props}>
       {overlay && (
-        <Overlay opaque={opaque} show={show} onSetVisible={handleShow} />
+        <Overlay opaque={opaque} show={show} handleShow={handleShow} />
       )}
 
       <Container show={show}>
@@ -42,7 +62,7 @@ function Modal({
           <StyledHeader>{header}</StyledHeader>
           <StyledBody>{body}</StyledBody>
         </ModalContent>
-        <ModalButton onSetVisible={handleShow} />
+        <ModalButton handleShow={handleShow} />
       </Container>
     </Wrapper>,
     document.body
@@ -50,11 +70,11 @@ function Modal({
 }
 
 function Header({ children }: { children: string }) {
-  return <></>;
+  return <>{children}</>;
 }
 
 function Body({ children }: { children: string }) {
-  return <></>;
+  return <>{children}</>;
 }
 
 export default Object.assign(Modal, {
@@ -76,7 +96,7 @@ const Container = styled.div<{ show: boolean }>`
   min-width: 300px;
   height: auto;
   min-height: 200px;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate3d(-50%, -50%, 0);

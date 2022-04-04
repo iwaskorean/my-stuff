@@ -3,15 +3,15 @@ import styled from '@emotion/styled/macro';
 import { ButtonHTMLAttributes } from 'react';
 
 interface ModalButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  onSetVisible(): void;
+  handleShow(): void;
 }
 
 export default function ModalButton({
-  onSetVisible,
+  handleShow,
   ...props
 }: ModalButtonProps) {
   return (
-    <Button onClick={() => onSetVisible()} {...props}>
+    <Button onClick={() => handleShow()} {...props}>
       <CloseIcon />
     </Button>
   );

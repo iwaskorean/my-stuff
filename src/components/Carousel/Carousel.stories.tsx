@@ -1,6 +1,7 @@
 import { Story } from '@storybook/react';
 import Carousel, { CrouselProps } from './Carousel';
 import { styled } from '@storybook/theming';
+import { theme } from '../../theme/GlobalThemeProvide';
 
 export default {
   title: 'Components/Carousel',
@@ -12,19 +13,16 @@ const Template: Story<CrouselProps> = (args) => {
     <Container>
       <Carousel {...args}>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray100 }} />
         </Carousel.Item>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray200 }} />
         </Carousel.Item>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray300 }} />
         </Carousel.Item>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
-        </Carousel.Item>
-        <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray400 }} />
         </Carousel.Item>
       </Carousel>
     </Container>
@@ -38,7 +36,7 @@ export const ContainOneSlide = () => {
     <Container>
       <Carousel>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray200 }} />
         </Carousel.Item>
       </Carousel>
     </Container>
@@ -50,13 +48,13 @@ export const OnlyButtons = () => {
     <Container>
       <Carousel indicators={false}>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray200 }} />
         </Carousel.Item>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray300 }} />
         </Carousel.Item>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray400 }} />
         </Carousel.Item>
       </Carousel>
     </Container>
@@ -68,13 +66,13 @@ export const OnlyIndicators = () => {
     <Container>
       <Carousel buttons={false}>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray200 }} />
         </Carousel.Item>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray300 }} />
         </Carousel.Item>
         <Carousel.Item>
-          <img src='http://placehold.it/500x300' alt='' />
+          <Slide style={{ backgroundColor: theme.color.gray400 }} />
         </Carousel.Item>
       </Carousel>
     </Container>
@@ -83,4 +81,9 @@ export const OnlyIndicators = () => {
 
 const Container = styled.div`
   width: 500px;
+`;
+
+const Slide = styled.div`
+  width: 100%;
+  height: 300px;
 `;
