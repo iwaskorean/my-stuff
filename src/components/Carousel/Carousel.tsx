@@ -5,12 +5,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import Slide from './Slide';
+import Slide, { SlideProps } from './Slide';
 import SlideButton from './SlideButton';
 import Indicators from './Indicators';
 import styled from '@emotion/styled';
 
-export interface CrouselProps extends HTMLAttributes<HTMLDivElement> {
+export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   color?: typeof COLORS[keyof typeof COLORS];
   indicators?: boolean;
   buttons?: boolean;
@@ -22,11 +22,7 @@ export const COLORS = {
   TERTIARY: 'tertiary',
 } as const;
 
-export interface SlideProps {
-  children: ReactElement;
-}
-
-type SlideElement = ReactElement<SlideProps>;
+export type SlideElement = ReactElement<SlideProps>;
 
 function Carousel({
   color = 'primary',
@@ -34,7 +30,7 @@ function Carousel({
   buttons = true,
   children,
   ...props
-}: CrouselProps) {
+}: CarouselProps) {
   const [current, setCurrent] = useState(0);
   const isMoving = useRef(false);
 
@@ -72,18 +68,7 @@ function Carousel({
     <Container color={color} {...props}>
       <Inner length={slides.length} current={current}>
         {slides.map((slide, i) => {
-          const prev = current === 0 ? slides.length - 1 : current - 1;
-          const next = current === slides.length - 1 ? 0 : current + 1;
-          return (
-            <Slide
-              key={i}
-              active={i === current}
-              prev={i === prev}
-              next={i === next}
-            >
-              {slide}
-            </Slide>
-          );
+          return <Slide key={i}>{slide}</Slide>;
         })}
       </Inner>
 
@@ -126,12 +111,14 @@ const Container = styled.div<{ color: typeof COLORS[keyof typeof COLORS] }>`
   `};
 
   width: 100%;
+  height: 100%;
   position: relative;
   overflow-x: hidden;
 `;
 
 const Inner = styled.div<{ length: number; current: number }>`
   width: ${({ length }) => (length ? `calc(${length} * 100%)` : '100%')};
+  height: 100%;
   position: relative;
   display: flex;
   transform: ${({ current, length }) =>

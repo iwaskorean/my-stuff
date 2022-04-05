@@ -7,9 +7,9 @@ import React, {
   useState,
 } from 'react';
 
-import styled from '@emotion/styled';
-import { SlideProps } from '../Carousel/Carousel';
+import { SlideProps } from './Slide';
 import SlideButton from './SlideButton';
+import styled from '@emotion/styled';
 
 export interface MultiCarouselProps
   extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
