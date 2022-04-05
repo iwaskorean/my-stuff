@@ -5,7 +5,8 @@ const color: IColor = {
   black: '#000',
 
   primary: '#4971ff',
-  secondary: '#008189',
+  secondary: '#ff5e66',
+  tertiary: '#d7d7d7',
 
   gray100: '#f8f8f8',
   gray200: '#efefef',
