@@ -35,7 +35,7 @@ const Container = styled.div`
 
 const Label = styled.label<{ hideLabel: boolean }>`
   ${({ theme }) => theme.font.size16pt};
-  font-weight: ${({ theme }) => theme.fontWeight.semiBold};
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
   margin-left: 0.25rem;
 
   ${({ hideLabel }) =>

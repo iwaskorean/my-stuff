@@ -1,0 +1,42 @@
+import { Meta, Typeset } from '@storybook/addon-docs';
+import { theme } from 'src/theme/GlobalThemeProvide';
+
+<Meta title='Typography' />
+
+# Typography
+
+- Font: Roboto
+- Weights: light(300), regular(400), medium(500), bold(700)
+- Line Heights: 20,22,24,28,32,38,46,54,64,76
+
+```js
+// Usage
+import styled from '@emotion/styled';
+
+const MyStuff = styled.div`
+  ${({ theme }) => theme.font.size12pt}
+  // this property has font size and line height.
+  
+  font-size: ${({ theme }) => theme.fontSize.size12}px;
+  line-height: ${({ theme }) => theme.lineHeight.height20};
+  font-weight: ${({ theme }) => theme.fontWeight.light};
+`;
+```
+
+## Font
+
+<Typeset
+  fontSizes={[
+    Number(theme.fontSize.size12),
+    Number(theme.fontSize.size14),
+    Number(theme.fontSize.size16),
+    Number(theme.fontSize.size20),
+    Number(theme.fontSize.size24),
+    Number(theme.fontSize.size30),
+    Number(theme.fontSize.size38),
+    Number(theme.fontSize.size46),
+    Number(theme.fontSize.size56),
+    Number(theme.fontSize.size68),
+  ]}
+  fontWeight={theme.fontWeight.regular}
+/>
