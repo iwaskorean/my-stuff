@@ -1,16 +1,16 @@
 import { InputHTMLAttributes } from 'react';
-import { COLORS } from '../shared';
+import { VARIANTS } from '../shared';
 import styled from '@emotion/styled';
 
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
-  color?: typeof COLORS[keyof typeof COLORS];
+  variant?: typeof VARIANTS[keyof typeof VARIANTS];
   id: string;
   label: string;
   hideLabel?: boolean;
 }
 
 export default function Checkbox({
-  color = 'primary',
+  variant = VARIANTS.PRIMARY,
   id,
   label,
   hideLabel = false,
@@ -18,7 +18,7 @@ export default function Checkbox({
 }: CheckboxProps) {
   return (
     <Container>
-      <Input color={color} id={id} type='checkbox' {...props} />
+      <Input variant={variant} id={id} type='checkbox' {...props} />
       <Label htmlFor={id} hideLabel={hideLabel}>
         {label}
       </Label>
@@ -48,14 +48,7 @@ const Label = styled.label<{ hideLabel: boolean }>`
   `};
 `;
 
-const Input = styled.input<{ color: typeof COLORS[keyof typeof COLORS] }>`
-  --color: ${({ theme, color }) =>
-    color === COLORS.PRIMARY
-      ? theme.color.primary
-      : color === COLORS.SECONDARY
-      ? theme.color.secondary
-      : theme.color.tertiary};
-
+const Input = styled.input<{ variant: typeof VARIANTS[keyof typeof VARIANTS] }>`
   -webkit-appearance: none;
   appearance: none;
   background-color: ${({ theme }) => theme.color.white};
@@ -69,21 +62,51 @@ const Input = styled.input<{ color: typeof COLORS[keyof typeof COLORS] }>`
   transform: translateY(-0.075em);
   display: grid;
   place-content: center;
-  
+
   &::before {
     content: '';
     width: 0.65em;
     height: 0.65em;
     transform: scale(0);
     transition: transform 0.12s ease-in-out;
-    box-shadow: inset 1rem 1rem var(--color)};
   }
-  
+
   &:checked {
-    border: 0.15rem solid var(--color);
     &::before {
       transform: scale(1);
     }
   }
-  
+
+  ${({ variant, theme }) =>
+    variant === VARIANTS.PRIMARY &&
+    `
+    &::before {
+      box-shadow: inset 1rem 1rem ${theme.color.primary};
+    }
+    &:checked {
+      border: 0.15rem solid ${theme.color.primary};
+    }  
+  `}
+
+  ${({ variant, theme }) =>
+    variant === VARIANTS.SECONDARY &&
+    `
+    &::before {
+      box-shadow: inset 1rem 1rem ${theme.color.secondary};
+    }
+    &:checked {
+      border: 0.15rem solid ${theme.color.secondary};
+    }  
+  `}
+
+  ${({ variant, theme }) =>
+    variant === VARIANTS.TERTIARY &&
+    `
+    &::before {
+      box-shadow: inset 1rem 1rem ${theme.color.tertiary};
+    }
+    &:checked {
+      border: 0.15rem solid ${theme.color.tertiary};
+    }  
+  `}
 `;

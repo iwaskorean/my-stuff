@@ -13,7 +13,6 @@ import styled from '@emotion/styled';
 export interface TabsProps
   extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
   tabSize?: typeof TAB_SIZE[keyof typeof TAB_SIZE];
-  color?: typeof COLORS[keyof typeof COLORS];
 }
 
 export interface TabProps {
@@ -30,18 +29,7 @@ export const TAB_SIZE = {
   LARGE: 'large',
 } as const;
 
-export const COLORS = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  TERTIARY: 'tertiary',
-} as const;
-
-function Tabs({
-  children,
-  tabSize = TAB_SIZE.MEDIUM,
-  color = COLORS.PRIMARY,
-  ...props
-}: TabsProps) {
+function Tabs({ children, tabSize = TAB_SIZE.MEDIUM, ...props }: TabsProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const childrens = React.Children.toArray(children) as TabElement[];
@@ -51,22 +39,24 @@ function Tabs({
 
   return (
     <>
-      <Container tabSize={tabSize} color={color} {...props}>
+      <Container {...props}>
         <Nav>
-          <Inner length={titles.length}>
+          <Inner length={titles.length} tabSize={tabSize}>
             {titles?.map((title: string, i: number) => (
               <Tab
                 key={i}
                 index={i}
                 currentIndex={currentIndex}
                 disabled={childrens[i].props.disabled === true}
+                length={titles.length}
+                tabSize={tabSize}
                 onClick={() => setCurrentIndex(i)}
               >
                 {title}
               </Tab>
             ))}
             {titles.length > 0 && (
-              <TabGlider color={color} currentIndex={currentIndex} />
+              <TabGlider tabSize={tabSize} currentIndex={currentIndex} />
             )}
           </Inner>
         </Nav>
@@ -88,35 +78,7 @@ export default Object.assign(Tabs, {
   Item,
 });
 
-const Container = styled.div<TabsProps>`
-  ${({ tabSize }) =>
-    (tabSize === TAB_SIZE.MEDIUM &&
-      `
-    --tab-width: 100;
-  `) ||
-    (tabSize === TAB_SIZE.SMALL &&
-      `
-      --tab-width: 50;
-  `) ||
-    (tabSize === TAB_SIZE.LARGE &&
-      `
-      --tab-width: 150;
-  `)};
-
-  ${({ color, theme }) =>
-    (color === COLORS.PRIMARY &&
-      `
-      --tab-color: ${theme.color.primary};
-`) ||
-    (color === COLORS.SECONDARY &&
-      `
-      --tab-color: ${theme.color.secondary};
-`) ||
-    (color === COLORS.TERTIARY &&
-      `
-      --tab-color: ${theme.color.gray600};
-`)};
-
+const Container = styled.div`
   width: 100%;
   border-radius: 5px;
   box-shadow: 0px 1px 2px rgba(0 0 0 / 20%);
@@ -129,8 +91,17 @@ const Nav = styled.nav`
   border-bottom: 2px solid ${({ theme }) => theme.color.gray200};
 `;
 
-const Inner = styled.div<{ length: number }>`
+const Inner = styled.div<{ length: number; tabSize: string }>`
   position: relative;
-  width: ${({ length }) => `calc(var(--tab-width) * ${length}px)`};
+
+  ${({ tabSize, length }) =>
+    tabSize === TAB_SIZE.SMALL && `width: calc(50 * ${length}px);`}
+
+  ${({ tabSize, length }) =>
+    tabSize === TAB_SIZE.MEDIUM && `width: calc(100 * ${length}px);`}
+
+  ${({ tabSize, length }) =>
+    tabSize === TAB_SIZE.SMALL && `width: calc(150 * ${length}px);`}
+  
   display: flex;
 `;

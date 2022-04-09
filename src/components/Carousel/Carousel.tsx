@@ -1,5 +1,6 @@
 import React, {
   HTMLAttributes,
+  PropsWithChildren,
   ReactElement,
   useEffect,
   useRef,
@@ -10,22 +11,20 @@ import SlideButton from './SlideButton';
 import Indicators from './Indicators';
 import styled from '@emotion/styled';
 
-export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
-  color?: typeof COLORS[keyof typeof COLORS];
+export interface CarouselProps
+  extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
   indicators?: boolean;
   buttons?: boolean;
 }
 
-export const COLORS = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  TERTIARY: 'tertiary',
-} as const;
+export interface CarouselProps {
+  indicators?: boolean;
+  buttons?: boolean;
+}
 
 export type SlideElement = ReactElement<SlideProps>;
 
 function Carousel({
-  color = 'primary',
   indicators = true,
   buttons = true,
   children,
@@ -64,8 +63,12 @@ function Carousel({
     }
   };
 
+  const handleCurrent = (index: number) => {
+    setCurrent(index);
+  };
+
   return (
-    <Container color={color} {...props}>
+    <Container {...props}>
       <Inner length={slides.length} current={current}>
         {slides.map((slide, i) => {
           return <Slide key={i}>{slide}</Slide>;
@@ -76,7 +79,7 @@ function Carousel({
         <Indicators
           length={slides.length}
           current={current}
-          handleCurrent={setCurrent}
+          handleCurrent={handleCurrent}
         />
       )}
       {slides.length > 1 && buttons && (
@@ -97,19 +100,7 @@ export default Object.assign(Carousel, {
   Item,
 });
 
-const Container = styled.div<{ color: typeof COLORS[keyof typeof COLORS] }>`
-  --color: ${({ theme }) => theme.color.primary};
-  ${({ color, theme }) =>
-    color === COLORS.SECONDARY &&
-    `
-      --color: ${theme.color.secondary}
-  `};
-  ${({ color, theme }) =>
-    color === COLORS.TERTIARY &&
-    `
-      --color: ${theme.color.gray600}
-  `};
-
+const Container = styled.div`
   width: 100%;
   height: 100%;
   position: relative;

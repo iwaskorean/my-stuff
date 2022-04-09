@@ -46,8 +46,8 @@ const Button = styled.button<{
     width: 8px;
     height: 8px;
     top: 50%;
-    border-right: 3px solid ${({ theme }) => theme.color.gray700};
-    border-bottom: 3px solid ${({ theme }) => theme.color.gray700};
+    border-right: 3px solid ${({ theme }) => theme.color.primary};
+    border-bottom: 3px solid ${({ theme }) => theme.color.primary};
     transform: translate3d(-50%, -50%, 0) rotate(135deg);
   }
   ${({ prev }) =>

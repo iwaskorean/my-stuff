@@ -1,6 +1,6 @@
+import { ButtonHTMLAttributes } from 'react';
 import { MdClose } from 'react-icons/md';
 import styled from '@emotion/styled/macro';
-import { ButtonHTMLAttributes } from 'react';
 
 interface ModalButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   handleShow(): void;
@@ -29,7 +29,7 @@ const Button = styled.button`
 `;
 
 const CloseIcon = styled(MdClose)`
-  margin: calc(var(--padding) - 10px);
+  margin: 5px;
   font-size: ${({ theme }) => theme.fontSize.size30}px;
   background: ${({ theme }) => theme.color.white};
   color: ${({ theme }) => theme.color.primary};

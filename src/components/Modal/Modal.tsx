@@ -1,3 +1,4 @@
+import React from 'react';
 import { createPortal } from 'react-dom';
 import {
   HtmlHTMLAttributes,
@@ -8,7 +9,6 @@ import {
 import Overlay from './Overlay';
 import ModalButton from './ModalButton';
 import styled from '@emotion/styled/macro';
-import React from 'react';
 
 export interface ModalProps
   extends PropsWithChildren<HtmlHTMLAttributes<HTMLDivElement>> {
@@ -83,7 +83,6 @@ export default Object.assign(Modal, {
 });
 
 const Wrapper = styled.section`
-  --padding: 15px;
   position: absolute;
   width: 100%;
   height: 100vh;
@@ -109,7 +108,7 @@ const Container = styled.div<{ show: boolean }>`
 
 const ModalContent = styled.div`
   font-size: 2rem;
-  padding: var(--padding);
+  padding: 15px;
   display: flex;
   flex-direction: column;
   word-wrap: break-word;

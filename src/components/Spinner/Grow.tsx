@@ -1,10 +1,10 @@
 import { css, keyframes } from '@emotion/react';
-import { COLORS, SIZES } from '../shared';
+import { VARIANTS, SIZES } from '../shared';
 import { PIXEL_SIZES, StylingProps } from './Spinner';
 import styled from '@emotion/styled';
 
-export default function Grow({ size, color, inline }: StylingProps) {
-  return <GrowSpinner size={size} color={color} inline={inline} />;
+export default function Grow({ size, variant, inline }: StylingProps) {
+  return <GrowSpinner size={size} variant={variant} inline={inline} />;
 }
 
 const grow = keyframes`
@@ -32,14 +32,16 @@ const GrowSpinner = styled.div<StylingProps>`
   
   ${({ size }) => size === SIZES.SMALL && setSizeStyle(PIXEL_SIZES.SMALL)}
 
-  ${({ color, theme }) =>
-    color === COLORS.PRIMARY && `background-color: ${theme.color.primary}`};
+  ${({ variant, theme }) =>
+    variant === VARIANTS.PRIMARY && `background-color: ${theme.color.primary}`};
   
-  ${({ color, theme }) =>
-    color === COLORS.SECONDARY && `background-color: ${theme.color.secondary}`};
+  ${({ variant, theme }) =>
+    variant === VARIANTS.SECONDARY &&
+    `background-color: ${theme.color.secondary}`};
   
-  ${({ color, theme }) =>
-    color === COLORS.TERTIARY && `background-color: ${theme.color.tertiary}`};
+  ${({ variant, theme }) =>
+    variant === VARIANTS.TERTIARY &&
+    `background-color: ${theme.color.tertiary}`};
   
   border-radius: 50%;
   ${({ inline }) => inline && `display: inline-block`};

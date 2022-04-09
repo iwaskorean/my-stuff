@@ -17,5 +17,5 @@ const Template: Story<ProgressBarProps> = (args) => {
 export const Basic = Template.bind({});
 Basic.args = {
   completed: 50,
-  color: 'primary',
+  variant: 'primary',
 };

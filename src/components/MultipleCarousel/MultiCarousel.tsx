@@ -6,7 +6,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-
 import { SlideProps } from './Slide';
 import SlideButton from './SlideButton';
 import styled from '@emotion/styled';
@@ -40,9 +39,15 @@ function MultiCarousel({
         current={current}
         viewItemsLength={viewItemsLength}
         length={childrens.length}
+        slideWidth={100 / viewItemsLength}
       >
         {childrens.map((children, i: number) => (
-          <Slide key={i} current={current} length={childrens.length}>
+          <Slide
+            key={i}
+            current={current}
+            length={childrens.length}
+            slideWidth={100 / viewItemsLength}
+          >
             {children}
           </Slide>
         ))}
@@ -87,9 +92,9 @@ const Inner = styled.div<{
   current: number;
   length: number;
   viewItemsLength: number;
+  slideWidth: number;
 }>`
-  --slideWidth: calc(100% / ${({ viewItemsLength }) => viewItemsLength});
-  width: calc(var(--slideWidth) * ${({ length }) => length});
+  width: ${({ slideWidth, length }) => slideWidth * length}%;
   display: flex;
   transform: translate3d(
     calc(
@@ -105,8 +110,9 @@ const Inner = styled.div<{
 const Slide = styled.div<{
   current: number;
   length: number;
+  slideWidth: number;
 }>`
-  width: var(--slideWidth);
+  width: ${({ slideWidth }) => slideWidth}%;
   padding: 0.5rem;
   font-size: 2rem;
 `;

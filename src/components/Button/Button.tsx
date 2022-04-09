@@ -46,7 +46,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         size={size}
         {...props}
-        // @ts-ignore
         ref={ref}
       >
         <Group>
@@ -59,7 +58,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         size={size}
         {...props}
-        // @ts-ignore
         ref={ref}
       >
         {children}

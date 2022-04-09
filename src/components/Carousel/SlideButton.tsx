@@ -16,7 +16,10 @@ export default function SlideButton({
   return <Button prev={prev} next={next} onClick={handleSlide} {...props} />;
 }
 
-const Button = styled.button<{ prev: boolean; next: boolean }>`
+const Button = styled.button<{
+  prev: boolean;
+  next: boolean;
+}>`
   position: absolute;
   top: 50%;
   width: 35px;
@@ -32,9 +35,13 @@ const Button = styled.button<{ prev: boolean; next: boolean }>`
     width: 10px;
     height: 10px;
     top: 50%;
-    border-right: 3px solid var(--color);
-    border-bottom: 3px solid var(--color);
     transform: translate3d(-50%, -50%, 0) rotate(135deg);
+
+    ${({ theme }) =>
+      `
+        border-right: 3px solid ${theme.color.primary};
+        border-bottom: 3px solid ${theme.color.primary};
+    `}
   }
 
   ${({ prev }) =>

@@ -1,23 +1,23 @@
 import { HTMLAttributes } from 'react';
-import { COLORS } from '../shared';
+import { VARIANTS } from '../shared';
 import styled from '@emotion/styled';
 
 export interface ProgressBarProps extends HTMLAttributes<HTMLSpanElement> {
   completed: number;
-  color?: typeof COLORS[keyof typeof COLORS];
+  variant?: typeof VARIANTS[keyof typeof VARIANTS];
   max?: number;
 }
 
 export default function ProgressBar({
   completed,
-  color = 'primary',
+  variant = VARIANTS.PRIMARY,
   max = 100,
   ...props
 }: ProgressBarProps) {
   return (
     <Container>
       <Gauge
-        color={color}
+        variant={variant}
         completed={completed <= 0 ? 0 : completed >= max ? max : completed}
         max={max}
         {...props}
@@ -35,20 +35,24 @@ const Container = styled.div`
   margin-bottom: 16px;
 `;
 
-const Gauge = styled.span<{ completed: number; max: number }>`
+const Gauge = styled.span<{
+  variant: typeof VARIANTS[keyof typeof VARIANTS];
+  completed: number;
+  max: number;
+}>`
   width: ${({ completed, max }) => (completed / max) * 100}%;
   display: block;
   height: 100%;
   height: 25px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.color.primary};
-  ${({ color, theme }) =>
-    color === COLORS.SECONDARY &&
+  ${({ variant, theme }) =>
+    variant === VARIANTS.SECONDARY &&
     `
     background-color: ${theme.color.secondary};
   `}
-  ${({ color, theme }) =>
-    color === COLORS.TERTIARY &&
+  ${({ variant, theme }) =>
+    variant === VARIANTS.TERTIARY &&
     `
     background-color: ${theme.color.tertiary};
   `}

@@ -1,10 +1,10 @@
 import { PIXEL_SIZES, StylingProps } from './Spinner';
 import { css, keyframes } from '@emotion/react';
-import { COLORS, SIZES } from '../shared';
+import { VARIANTS, SIZES } from '../shared';
 import styled from '@emotion/styled';
 
-export default function Border({ size, color, inline }: StylingProps) {
-  return <BorderSpinner size={size} color={color} inline={inline} />;
+export default function Border({ size, variant, inline }: StylingProps) {
+  return <BorderSpinner size={size} variant={variant} inline={inline} />;
 }
 
 const spin = keyframes`
@@ -27,14 +27,14 @@ const BorderSpinner = styled.div<StylingProps>`
   
   ${({ size }) => size === SIZES.LARGE && setSizeStyling(PIXEL_SIZES.LARGE)} 
   
-  ${({ color, theme }) =>
-    color === COLORS.PRIMARY && `border-color: ${theme.color.primary}`};
+  ${({ variant, theme }) =>
+    variant === VARIANTS.PRIMARY && `border-color: ${theme.color.primary}`};
   
-  ${({ color, theme }) =>
-    color === COLORS.SECONDARY && `border-color: ${theme.color.secondary}`};
+  ${({ variant, theme }) =>
+    variant === VARIANTS.SECONDARY && `border-color: ${theme.color.secondary}`};
   
-  ${({ color, theme }) =>
-    color === COLORS.TERTIARY && `border-color: ${theme.color.tertiary}`};
+  ${({ variant, theme }) =>
+    variant === VARIANTS.TERTIARY && `border-color: ${theme.color.tertiary}`};
   
   border-right-color: transparent;
   border-style: solid;

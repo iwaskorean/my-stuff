@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 interface IndicatorsProps {
   length: number;
   current: number;
-  handleCurrent: React.Dispatch<React.SetStateAction<number>>;
+  handleCurrent(index: number): void;
 }
 
 export default function Indicators({
@@ -24,7 +24,7 @@ export default function Indicators({
   );
 }
 
-const Container = styled.ul`
+const Container = styled.span`
   position: absolute;
   bottom: 10px;
   width: 100%;
@@ -34,7 +34,9 @@ const Container = styled.ul`
   justify-content: center;
 `;
 
-const Indicator = styled.li<{ active: boolean }>`
+const Indicator = styled.button<{
+  active: boolean;
+}>`
   width: 9%;
   min-width: 18px;
   height: 10px;
@@ -43,9 +45,9 @@ const Indicator = styled.li<{ active: boolean }>`
   cursor: pointer;
   margin: 0 5px;
 
-  ${({ active }) =>
+  ${({ active, theme }) =>
     active &&
     `
-    background-color: var(--color) ;
+    background-color: ${theme.color.primary}
   `}
 `;

@@ -1,18 +1,18 @@
-import { COLORS, SIZES } from '../shared';
+import { VARIANTS, SIZES } from '../shared';
 import Grow from './Grow';
 import Border from './Border';
 import styled from '@emotion/styled';
 
 export interface SpinnerProps {
-  type?: typeof TYPES[keyof typeof TYPES];
+  animation?: typeof ANIMATIONS[keyof typeof ANIMATIONS];
   size?: typeof SIZES[keyof typeof SIZES];
-  color?: typeof COLORS[keyof typeof COLORS];
+  variant?: typeof VARIANTS[keyof typeof VARIANTS];
   inline?: boolean;
 }
 
 export interface StylingProps {
   size: typeof SIZES[keyof typeof SIZES];
-  color: typeof COLORS[keyof typeof COLORS];
+  variant: typeof VARIANTS[keyof typeof VARIANTS];
   inline: boolean;
 }
 
@@ -22,24 +22,24 @@ export const PIXEL_SIZES = {
   LARGE: 70,
 } as const;
 
-const TYPES = {
+const ANIMATIONS = {
   BORDER: 'border',
   GROW: 'grow',
 } as const;
 
 export default function Spinner({
-  type = TYPES.BORDER,
+  animation = ANIMATIONS.BORDER,
   size = SIZES.DEFAULT,
-  color = COLORS.PRIMARY,
+  variant = VARIANTS.PRIMARY,
   inline = false,
 }: SpinnerProps) {
   return (
     <Wrapper>
-      {type === TYPES.BORDER && (
-        <Border size={size} color={color} inline={inline} />
+      {animation === ANIMATIONS.BORDER && (
+        <Border size={size} variant={variant} inline={inline} />
       )}
-      {type === TYPES.GROW && (
-        <Grow size={size} color={color} inline={inline} />
+      {animation === ANIMATIONS.GROW && (
+        <Grow size={size} variant={variant} inline={inline} />
       )}
     </Wrapper>
   );

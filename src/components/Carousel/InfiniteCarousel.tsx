@@ -1,18 +1,12 @@
 import React, { HTMLAttributes, useEffect, useState } from 'react';
 import Slide, { SlideProps } from './Slide';
 import SlideButton from './SlideButton';
-import { COLORS, SlideElement } from './Carousel';
+import { SlideElement } from './Carousel';
 import styled from '@emotion/styled';
 
-export interface InfiniteCarouselProps extends HTMLAttributes<HTMLDivElement> {
-  color?: typeof COLORS[keyof typeof COLORS];
-}
+export interface InfiniteCarouselProps extends HTMLAttributes<HTMLDivElement> {}
 
-function InfiniteCarousel({
-  children,
-  color = 'primary',
-  ...props
-}: InfiniteCarouselProps) {
+function InfiniteCarousel({ children, ...props }: InfiniteCarouselProps) {
   const [current, setCurrent] = useState(1);
   const [prev, setPrev] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
@@ -66,7 +60,7 @@ function InfiniteCarousel({
   };
 
   return (
-    <Container color={color} {...props}>
+    <Container {...props}>
       <Inner length={slides.length} current={current} prev={prev}>
         {slides.map((children: any, i: any) => {
           return <Slide key={i}>{children}</Slide>;
@@ -91,18 +85,7 @@ export default Object.assign(InfiniteCarousel, {
   Item,
 });
 
-const Container = styled.div<InfiniteCarouselProps>`
-  --color: ${({ theme }) => theme.color.primary};
-  ${({ color, theme }) =>
-    color === COLORS.SECONDARY &&
-    `
-      --color: ${theme.color.secondary}
-  `};
-  ${({ color, theme }) =>
-    color === COLORS.TERTIARY &&
-    `
-      --color: ${theme.color.gray600}
-  `};
+const Container = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
