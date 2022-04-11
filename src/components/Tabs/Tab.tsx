@@ -53,12 +53,15 @@ const TabButton = styled.button<StylingProps>`
   transition: color 0.15s ease-in;
   outline: 0;
   border: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   ${({ tabSize }) => tabSize === TAB_SIZE.SMALL && `width: 50px;`}
   ${({ tabSize }) => tabSize === TAB_SIZE.MEDIUM && `width: 100px;`}
   ${({ tabSize }) => tabSize === TAB_SIZE.LARGE && `width: 150px;`}
 
-  $:hover {
+  &:hover {
     color: ${({ theme }) => theme.color.primary};
   }
 

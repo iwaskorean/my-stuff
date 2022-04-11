@@ -62,7 +62,7 @@ function InfiniteCarousel({ children, ...props }: InfiniteCarouselProps) {
   return (
     <Container {...props}>
       <Inner length={slides.length} current={current} prev={prev}>
-        {slides.map((children: any, i: any) => {
+        {slides.map((children, i: number) => {
           return <Slide key={i}>{children}</Slide>;
         })}
       </Inner>

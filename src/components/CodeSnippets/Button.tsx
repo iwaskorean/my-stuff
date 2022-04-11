@@ -11,8 +11,6 @@ export default function CopyButton({
   handleClick,
   ...props
 }: CopyButtonProps) {
-  console.log(isCopied);
-
   return (
     <StyledButton
       isCopied={isCopied}
@@ -31,7 +29,7 @@ const StyledButton = styled.button<{ isCopied: boolean }>`
   right: 0;
   background-color: ${({ theme }) => theme.color.primary};
   ${({ theme }) => theme.font.size14pt}
-  // border: 0.1rem solid ${({ theme }) => theme.color.primary};
+
   width: 4rem;
   height: 2rem;
   outline: 0;

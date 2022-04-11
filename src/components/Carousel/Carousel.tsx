@@ -17,11 +17,6 @@ export interface CarouselProps
   buttons?: boolean;
 }
 
-export interface CarouselProps {
-  indicators?: boolean;
-  buttons?: boolean;
-}
-
 export type SlideElement = ReactElement<SlideProps>;
 
 function Carousel({

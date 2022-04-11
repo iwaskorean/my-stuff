@@ -1,25 +1,25 @@
-import { InputHTMLAttributes } from 'react';
 import { VARIANTS } from '../shared';
+import { InputHTMLAttributes } from 'react';
 import { selectionInputStyling } from '../shared/styles';
 import styled from '@emotion/styled';
 
-export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface RadioProps extends InputHTMLAttributes<HTMLInputElement> {
   variant?: typeof VARIANTS[keyof typeof VARIANTS];
   id: string;
   label: string;
   hideLabel?: boolean;
 }
 
-export default function Checkbox({
+export default function Radio({
   variant = VARIANTS.PRIMARY,
   id,
   label,
   hideLabel = false,
   ...props
-}: CheckboxProps) {
+}: RadioProps) {
   return (
     <Wrapper>
-      <Input variant={variant} id={id} type='checkbox' {...props} />
+      <Input variant={variant} id={id} type='radio' {...props} />
       <Label htmlFor={id} hideLabel={hideLabel}>
         {label}
       </Label>
@@ -33,24 +33,15 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const Label = styled.label<{ hideLabel: boolean }>`
-  ${({ theme }) => theme.font.size16pt};
-  margin-left: 0.25rem;
-  cursor: pointer;
+const Input = styled.input<{
+  variant: typeof VARIANTS[keyof typeof VARIANTS];
+}>`
+  ${selectionInputStyling};
 
-  ${({ hideLabel }) =>
-    hideLabel &&
-    `
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
-    width: 1px !important;
-  `};
-`;
-
-const Input = styled.input<{ variant: typeof VARIANTS[keyof typeof VARIANTS] }>`
-  ${selectionInputStyling}
-  border-radius: 0.15rem;
+  border-radius: 50%;
+  &::before {
+    border-radius: 50%;
+  }
 
   ${({ variant, theme }) =>
     variant === VARIANTS.PRIMARY &&
@@ -84,4 +75,19 @@ const Input = styled.input<{ variant: typeof VARIANTS[keyof typeof VARIANTS] }>`
       border: 0.15rem solid ${theme.color.tertiary};
     }  
   `}
+`;
+
+const Label = styled.label<{ hideLabel: boolean }>`
+  ${({ theme }) => theme.font.size16pt};
+  margin-left: 0.25rem;
+  cursor: pointer;
+
+  ${({ hideLabel }) =>
+    hideLabel &&
+    `
+      width: 1px !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: clip;
+  `};
 `;
